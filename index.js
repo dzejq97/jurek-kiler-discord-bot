@@ -1,11 +1,11 @@
-const { Events } = require('discord.js');
 const { token } = require('./config.json');
 
-const JKClient = require('./JKClient'),
-	client = new JKClient();
+const JKClient = require('./core/JKClient');
+const client = new JKClient();
 
-client.once(Events.ClientReady, c => {
-	console.log(`Logged in as ${c.user.tag}`);
-});
+const init = async () => {
+	await client.sequelize.sync();
+	client.login(token);
+};
 
-client.login(token);
+init();
