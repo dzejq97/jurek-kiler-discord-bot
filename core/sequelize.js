@@ -7,5 +7,6 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	dialectOptions: {
 		mode: sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE | sqlite.OPEN_FULLMUTEX,
 	},
+	logging: false,
 });
 module.exports = sequelize;

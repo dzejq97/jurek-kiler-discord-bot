@@ -16,6 +16,7 @@ class JKClient extends Client {
 
 	async getOrCreateGuild(guildID) {
 		let _guild = await this.Guild.findOne({ where: { id: guildID } });
+
 		if (_guild === null) {
 			_guild = await this.Guild.create({ id: guildID });
 			return _guild;
