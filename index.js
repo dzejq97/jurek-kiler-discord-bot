@@ -18,19 +18,21 @@ const init = async () => {
 		} else {
 			client.on(eventName, (...args) => event.execute(...args));
 		}
-		console.log(`Loading event: '${eventName}'`);
+		console.log(`Loaded event: '${eventName}'`);
 	});
 	console.log(`Loaded total of ${eventsDirectory.length} events`);
 
 
 	const commandsCategories = await readdir('./commands/');
 	commandsCategories.forEach(async (category) => {
-		console.error(category);
 		const commands = await readdir(`./commands/${category}/`);
 		commands.forEach((commandFile) => {
-			console.log(commandFile);
-
+			console.log(`Loading command: ${commandFile} from ${category}`);
+			const commandName = commandFile.split('.')[0];
+			const command = new (require(`./commands/${category}/${commandFile}`));
+			client.Commands.set(commandName, command);
 		});
+		console.log(`Loaded total of ${commands.length} commands from ${category}`);
 	});
 
 	client.login(token);
