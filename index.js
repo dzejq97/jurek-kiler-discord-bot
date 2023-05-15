@@ -8,8 +8,6 @@ const client = new JKClient();
 
 const init = async () => {
 	await client.sequelize.sync();
-	client.login(token);
-
 
 	const eventsDirectory = await readdir('./events/');
 	eventsDirectory.forEach((eventFile) => {
@@ -23,5 +21,18 @@ const init = async () => {
 		console.log(`Loading event: '${eventName}'`);
 	});
 	console.log(`Loaded total of ${eventsDirectory.length} events`);
+
+
+	const commandsCategories = await readdir('./commands/');
+	commandsCategories.forEach(async (category) => {
+		console.error(category);
+		const commands = await readdir(`./commands/${category}/`);
+		commands.forEach((commandFile) => {
+			console.log(commandFile);
+
+		});
+	});
+
+	client.login(token);
 };
 init();

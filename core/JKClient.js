@@ -1,4 +1,4 @@
-const { Client, IntentsBitField} = require('discord.js');
+const { Client, IntentsBitField, Collection, REST, Routes} = require('discord.js');
 
 class JKClient extends Client {
 	constructor() {
@@ -10,6 +10,7 @@ class JKClient extends Client {
 			],
 		});
 
+		this.Commands = new Collection();
 		this.sequelize = require('./sequelize');
 		this.Guild = require('./database_models/Guild');
 	}
