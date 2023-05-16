@@ -7,9 +7,7 @@ module.exports = class {
 
 	async execute() {
 		console.log(`Logged in as ${this.client.user.tag}`);
-		// Verify and register members on startup
-		const guilds = await this.client.guilds.fetch();
-		let _guildsCount = 0;
-		let _membersCount = 0;
+
+		this.client.syncDatabase();
 	}
 };
