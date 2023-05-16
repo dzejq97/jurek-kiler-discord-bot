@@ -17,8 +17,10 @@ class JKClient extends Client {
 		this.Commands = new Collection();
 		this.CommandsAliases = new Collection();
 		this.Config = require('../config.json');
+
 		this.sequelize = require('./sequelize');
-		this.Guild = require('./database_models/Guild');
+		this.GuildModel = require('./database_models/Guild.js');
+		this.MemberModel = require('./database_models/Member.js');
 	}
 
 	strHasPrefix(str) {
@@ -31,7 +33,6 @@ class JKClient extends Client {
 	async loadCommand(category, commandName) {
 		try {
 			const command = new (require(`../commands/${category}/${commandName}.js`))(this);
-			console.log(command);
 
 			this.Commands.set(command.info.name, command);
 			command.info.aliases.forEach(alias => {
@@ -44,15 +45,25 @@ class JKClient extends Client {
 	}
 
 	async getOrCreateGuild(guildID) {
-		let _guild = await this.Guild.findOne({ where: { id: guildID } });
+		let _guild = await this.GuildModel.findOne({ where: { GuildID: guildID } });
 
 		if (_guild === null) {
-			_guild = await this.Guild.create({ id: guildID });
+			_guild = await this.GuildModel.create({ GuildID: guildID });
 			return _guild;
 		} else {
 			return _guild;
 		}
 	}
-}
 
+	async getOrCreateMember(userID, guildID) {
+		let _member = await this.Guild.findOne({ where: { UserID: userID, GuildID: guildID } });
+
+		if (!_member) {
+			_member = await this.MemberModel.create({ UserID: userID, GuildID: guildID });
+			return _member;
+		} else {
+			return _member;
+		}
+	}
+}
 module.exports = JKClient;

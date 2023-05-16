@@ -4,3 +4,4 @@ config.json
 .eslintrc.json
 database.sqlite
 global.db
+jsconfig.json

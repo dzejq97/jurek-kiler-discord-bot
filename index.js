@@ -22,16 +22,12 @@ const init = async () => {
 	});
 	console.log(`Loaded total of ${eventsDirectory.length} events`);
 
-
 	const commandsCategories = await readdir('./commands/');
 	commandsCategories.forEach(async (category) => {
 		const commands = await readdir(`./commands/${category}/`);
 		commands.forEach((commandFile) => {
 			const commandName = commandFile.split('.')[0];
 			client.loadCommand(category, commandName);
-
-			const command = new (require(`./commands/${category}/${commandFile}`));
-			client.Commands.set(commandName, command);
 		});
 		console.log(`Loaded total of ${commands.length} commands from ${category}`);
 	});
@@ -39,3 +35,4 @@ const init = async () => {
 	client.login(token);
 };
 init();
+client.guilds.fetch

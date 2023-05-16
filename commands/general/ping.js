@@ -9,8 +9,10 @@ class Ping extends Command {
 		});
 	}
 
-	async execute(meta, ...args) {
+	async execute(meta, args) {
 		meta.message.reply('Pong!');
+
+		if (args) meta.message.reply(args.join(' '));
 	}
 }
 

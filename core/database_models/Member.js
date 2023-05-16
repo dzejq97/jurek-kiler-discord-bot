@@ -1,13 +1,17 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
 
-class Guild extends Model {}
-Guild.init({
+class Member extends Model {}
+Member.init({
 	ID: {
 		type: DataTypes.INTEGER,
 		primaryKey: true,
 		allowNull: false,
 		autoIncrement: true,
+	},
+	UserID: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
 	},
 	GuildID: {
 		type: DataTypes.INTEGER,
@@ -15,7 +19,7 @@ Guild.init({
 	},
 }, {
 	sequelize,
-	name: 'Guild',
+	name: 'Member',
 });
 
-module.exports = Guild;
+module.exports = Member;
