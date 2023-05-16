@@ -48,6 +48,7 @@ class JKClient extends Client {
 				if (!memberResult && !member.bot) this.MemberModel.create({ UserID: member.user.id, GuildID: guild.id });
 			}
 		}
+		console.log('Database synchronized');
 	}
 
 	async loadCommand(category, commandName) {

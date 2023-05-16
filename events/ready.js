@@ -6,8 +6,7 @@ module.exports = class {
 	}
 
 	async execute() {
+		await this.client.syncDatabase();
 		console.log(`Logged in as ${this.client.user.tag}`);
-
-		this.client.syncDatabase();
 	}
 };
