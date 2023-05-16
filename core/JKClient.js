@@ -1,4 +1,4 @@
-const { Client, IntentsBitField, Collection, REST, Routes} = require('discord.js');
+const { Client, IntentsBitField, Collection} = require('discord.js');
 
 class JKClient extends Client {
 	constructor() {
