@@ -12,11 +12,17 @@ module.exports = class {
 		if (!result.hasPrefix) return;
 
 		const args = message.content.slice(result.prefix.length).split(' ').filter((s) => s != '');
-		const cmd = args.shift().toLowerCase();
-		console.log(cmd);
-		console.log(args);
-		//  Here to contine, find command and execute it by name
+		const commandName = args.shift().toLowerCase();
+		const cmd = this.client.Commands.get(commandName) || this.client.Commands.get(this.client.CommandsAliases.get(commandName))
 
-		message.reply('message');
+		console.log(cmd);
+		if (!cmd) return message.reply('Nie ma takiej komendy');
+
+		const meta = {
+			command: cmd,
+			prefix: result.prefix,
+			message: message,
+		};
+		cmd.execute(meta, args);
 	}
 };
