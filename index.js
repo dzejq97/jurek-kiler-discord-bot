@@ -27,8 +27,9 @@ const init = async () => {
 	commandsCategories.forEach(async (category) => {
 		const commands = await readdir(`./commands/${category}/`);
 		commands.forEach((commandFile) => {
-			console.log(`Loading command: ${commandFile} from ${category}`);
 			const commandName = commandFile.split('.')[0];
+			client.loadCommand(category, commandName);
+
 			const command = new (require(`./commands/${category}/${commandFile}`));
 			client.Commands.set(commandName, command);
 		});
