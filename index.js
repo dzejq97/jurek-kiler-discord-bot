@@ -7,8 +7,8 @@ const JKClient = require('./core/JKClient');
 const client = new JKClient();
 
 const init = async () => {
-	//await client.sequelize.sync({force: true});
-	await client.sequelize.sync();
+	await client.sequelize.sync({force: true});
+	//await client.sequelize.sync();
 
 	const eventsDirectory = await readdir('./events/');
 	eventsDirectory.forEach((eventFile) => {

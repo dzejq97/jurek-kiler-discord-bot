@@ -1,4 +1,3 @@
-
 module.exports = class {
 	constructor(client) {
 		this.client = client;
@@ -7,6 +6,7 @@ module.exports = class {
 
 	async execute() {
 		await this.client.syncDatabase();
+		await this.client.initUpdateLoop();
 		console.log(`Logged in as ${this.client.user.tag}`);
 	}
 };

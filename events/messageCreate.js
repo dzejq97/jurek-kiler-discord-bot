@@ -5,6 +5,8 @@ module.exports = class {
 	}
 
 	async execute(message) {
+		this.client.emit('guildCreate', message.member);
+
 		// Ignore bots messages
 		if (message.author.bot) return;
 

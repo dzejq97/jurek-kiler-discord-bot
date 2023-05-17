@@ -1,4 +1,5 @@
 const { Client, IntentsBitField, Collection} = require('discord.js');
+const { setIntervalAsync, clearIntervalAsync } = require('set-interval-async');
 
 class JKClient extends Client {
 	constructor() {
@@ -22,6 +23,15 @@ class JKClient extends Client {
 		this.GuildModel = require('./database_models/Guild.js');
 		this.MemberModel = require('./database_models/Member.js');
 
+		this.updateLoop = null;
+	}
+
+	async initUpdateLoop() {
+		const _loop = new (require('../core/updateLoop.js'))(this);
+		this.updateLoop = setIntervalAsync(async () => await _loop.execute(), this.Config.updateLoopInterval);
+		//this.updateLoop = setIntervalAsync(async () => {
+		//	console.log('update loop');
+		//}, this.Config.updateLoopInterval);
 	}
 
 	strHasPrefix(str) {
@@ -45,7 +55,7 @@ class JKClient extends Client {
 			const _members = await thisGuild.members.fetch();
 			for (const member of _members.values()) {
 				const memberResult = await this.MemberModel.findOne({ where: { UserID: member.user.id, GuildID: guild.id } });
-				if (!memberResult && !member.bot) this.MemberModel.create({ UserID: member.user.id, GuildID: guild.id });
+				if (!memberResult && !member.user.bot) this.MemberModel.create({ UserID: member.user.id, GuildID: guild.id });
 			}
 		}
 		console.log('Database synchronized');
@@ -77,7 +87,7 @@ class JKClient extends Client {
 	}
 
 	async getOrCreateMember(userID, guildID) {
-		let _member = await this.Guild.findOne({ where: { UserID: userID, GuildID: guildID } });
+		let _member = await this.MemberModel.findOne({ where: { UserID: userID, GuildID: guildID } });
 
 		if (!_member) {
 			_member = await this.MemberModel.create({ UserID: userID, GuildID: guildID });
