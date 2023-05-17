@@ -29,9 +29,6 @@ class JKClient extends Client {
 	async initUpdateLoop() {
 		const _loop = new (require('../core/updateLoop.js'))(this);
 		this.updateLoop = setIntervalAsync(async () => await _loop.execute(), this.Config.updateLoopInterval);
-		//this.updateLoop = setIntervalAsync(async () => {
-		//	console.log('update loop');
-		//}, this.Config.updateLoopInterval);
 	}
 
 	strHasPrefix(str) {
