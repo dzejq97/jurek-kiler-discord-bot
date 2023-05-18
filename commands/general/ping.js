@@ -10,6 +10,7 @@ class Ping extends Command {
 	}
 
 	async execute(meta, args) {
+		meta.message.reply(this.info.category);
 		meta.message.reply('Pong!');
 
 		if (args) meta.message.reply(args.join(' '));

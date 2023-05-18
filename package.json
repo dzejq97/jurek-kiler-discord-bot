@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/sequelize": "^4.28.15",
+    "chalk": "^4.1.2",
     "discord.js": "^14.10.2",
     "sequelize": "^6.31.1",
     "set-interval-async": "^3.0.3",

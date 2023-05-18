@@ -7,7 +7,7 @@ const JKClient = require('./core/JKClient');
 const client = new JKClient();
 
 const init = async () => {
-	await client.sequelize.sync({force: true});
+	await client.sequelize.sync({ force: true });
 	//await client.sequelize.sync();
 
 	const eventsDirectory = await readdir('./events/');
@@ -19,9 +19,9 @@ const init = async () => {
 		} else {
 			client.on(eventName, (...args) => event.execute(...args));
 		}
-		console.log(`Loaded event: '${eventName}'`);
+		client.Logger.logInfo(`Loaded event: '${eventName}'`);
 	});
-	console.log(`Loaded total of ${eventsDirectory.length} events`);
+	client.Logger.logSuccess(`Loaded total of ${eventsDirectory.length} events`);
 
 	const commandsCategories = await readdir('./commands/');
 	commandsCategories.forEach(async (category) => {
@@ -30,10 +30,9 @@ const init = async () => {
 			const commandName = commandFile.split('.')[0];
 			client.loadCommand(category, commandName);
 		});
-		console.log(`Loaded total of ${commands.length} commands from ${category}`);
+		client.Logger.logSuccess(`Loaded total of ${commands.length} commands from ${category}`);
 	});
 
 	client.login(token);
 };
 init();
-client.guilds.fetch

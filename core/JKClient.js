@@ -18,11 +18,11 @@ class JKClient extends Client {
 		this.Commands = new Collection();
 		this.CommandsAliases = new Collection();
 		this.Config = require('../config.json');
+		this.Logger = new (require('../addons/logger.js'))();
 
 		this.sequelize = require('./sequelize');
 		this.GuildModel = require('./database_models/Guild.js');
 		this.MemberModel = require('./database_models/Member.js');
-
 		this.updateLoop = null;
 	}
 
@@ -60,13 +60,13 @@ class JKClient extends Client {
 
 	async loadCommand(category, commandName) {
 		try {
-			const command = new (require(`../commands/${category}/${commandName}.js`))(this);
+			const command = new (require(`../commands/${category}/${commandName}.js`))(this, category);
 
 			this.Commands.set(command.info.name, command);
 			command.info.aliases.forEach(alias => {
 				this.CommandsAliases.set(alias, command.info.name);
 			});
-			console.log(`Loaded command: ${command.info.name} from category ${category} containing ${command.info.aliases.length} aliases - ${command.info.aliases}`);
+			this.Logger.logInfo(`Loaded command: ${command.info.name} from category ${category} containing ${command.info.aliases.length} aliases - ${command.info.aliases}`);
 		} catch (error) {
 			console.log(error);
 		}

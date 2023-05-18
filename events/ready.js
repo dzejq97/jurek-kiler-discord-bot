@@ -7,6 +7,6 @@ module.exports = class {
 	async execute() {
 		await this.client.syncDatabase();
 		await this.client.initUpdateLoop();
-		console.log(`Logged in as ${this.client.user.tag}`);
+		this.client.Logger.logSuccess(`Logged in as ${this.client.user.tag}`);
 	}
 };
